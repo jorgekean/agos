@@ -9,7 +9,7 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [theme, setTheme] = useState<ThemeKey>(() => {
-        return (localStorage.getItem('fuse-theme') as ThemeKey) || 'WTWBrand';
+        return (localStorage.getItem('fuse-theme') as ThemeKey) || 'WTWGreen';
     });
 
     const updateTheme = (newTheme: ThemeKey) => {

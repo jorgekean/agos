@@ -32,7 +32,7 @@ export default defineConfig({
       // Optionally, configure caching strategies and other service worker options here.
     }),
   ],
-  base: '/agos/',
+  // base: '/agos/',
   server: {
     open: true,
   },

@@ -502,21 +502,7 @@ const Header: React.FC = () => {
                         }}
                     >
                         <h2 className="text-lg font-semibold text-gray-700 mb-3">Settings</h2>
-                        <div className="flex flex-col space-y-2">
-                            <label htmlFor="themeSelect" className="text-sm text-gray-600">Theme</label>
-                            <select
-                                id="themeSelect"
-                                value={theme}
-                                onChange={handleThemeChange}
-                                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-400 bg-gray-50"
-                            >
-                                {Object.keys(themes).map((themeKey) => (
-                                    <option key={themeKey} value={themeKey}>
-                                        {themes[themeKey as ThemeKey].name}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
+
                         <div className="mt-4 space-y-2">
                             <button
                                 onClick={handlePushData}
