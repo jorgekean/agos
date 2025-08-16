@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { FaSave, FaTimes } from "react-icons/fa"
+import { FaPlayCircle, FaSave, FaTimes } from "react-icons/fa"
 import FuseTextArea from "../../components/shared/forms/FuseTextArea"
 import FuseCombobox from "../../components/shared/forms/FuseCombobox"
 import FuseInput from "../../components/shared/forms/FuseInput"
@@ -294,14 +294,14 @@ const TimesheetForm: React.FC<TimesheetFormProps> = () => {
 
   return (
     <form onSubmit={handleSubmit} onKeyDown={handleKeyDown} className="flex flex-col h-full space-y-4">
-      <div className="flex space-x-2 mb-2">
+      <div className="flex space-x-2 mb-2 text-sm">
         {/* Task Description */}
         <div className="flex flex-col flex-1">
           <FuseInput
             name="taskDescription"
             value={formData.taskDescription}
             onChange={handleInputChange}
-            placeholder="What are you working on?"
+            placeholder="What's the main thing on your mind right now?"
           />
         </div>
 
@@ -346,7 +346,7 @@ const TimesheetForm: React.FC<TimesheetFormProps> = () => {
         </div>
 
         {/* Duration Input */}
-        <div className="flex items-center space-x-1 max-w-40">
+        <div className="flex flex-col space-x-1 max-w-40">
           {/* FuseInput */}
           <FuseInput
             name="durationStr"
@@ -357,15 +357,15 @@ const TimesheetForm: React.FC<TimesheetFormProps> = () => {
           // className="px-4 py-2 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
           />
 
-          {/* Dropdown Button */}
-          <AddTimeButton formData={formData} setFormData={setFormData} />
+          {/* Dropdown Button
+          <AddTimeButton formData={formData} setFormData={setFormData} /> */}
         </div>
 
         {editingTimesheet && (
           <CancelButton label="Cancel" onClick={() => setEditingTimesheet(undefined)} icon={<FaTimes className="w-3 h-5" />} />
         )}
 
-        <SaveButton label="Save" icon={<FaUserClock className="w-5 h-5" />} />
+        <SaveButton label="Start" icon={<FaPlayCircle className="w-5 h-5" />} />
       </div>
     </form >
   )

@@ -256,23 +256,7 @@ const SettingsContent = () => {
 
     return (
         <div>
-            <div className="mb-12">
-                <label className="block text-sm font-medium text-gray-700 mb-2">Select Timezone:</label>
-                {timezone && (
-                    <TimezoneSelect
-                        value={timezone}
-                        onChange={handleTimezoneChange}
-                        timezones={{
-                            ...allTimezones,
-                            "America/Lima": "Pittsburgh",
-                            "Europe/Berlin": "Frankfurt",
-                        }}
-                        className="w-full border border-gray-300 rounded-lg"
-                    />
-                )}
-            </div>
-
-            <div className="mb-12">
+            {/* <div className="mb-12">
                 <label className="block text-sm font-medium text-gray-700 mb-2">Select Default Work Location:</label>
                 <FuseCombobox
                     placeholder="Select work location"
@@ -282,7 +266,7 @@ const SettingsContent = () => {
                     labelKey={"description"}
                     valueKey={"id"}
                 />
-            </div>
+            </div> */}
 
             <div className="flex items-center mb-12">
                 {/* The actual checkbox */}
@@ -320,158 +304,8 @@ const SettingsContent = () => {
                 </label>
             </div>
 
-            <div className="flex items-center mb-12">
-                {/* The actual checkbox */}
-                <input
-                    type="checkbox"
-                    id="chkShowComments"
-                    className="peer hidden"
-                    checked={showComments}
-                    onChange={handleShowCommentsChange}
-                />
-
-                {/* Label as custom styled checkbox */}
-                <label htmlFor="chkShowComments"
-                    className="w-6 h-6 flex items-center justify-center border-2 border-gray-300 rounded-md peer-checked:bg-primary peer-checked:border-primary2 peer-checked:ring-2 peer-checked:ring-primary cursor-pointer"
-                >
-                    <svg
-                        className="w-4 h-4 text-white opacity-0 peer-checked:opacity-100"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="3"
-                        viewBox="0 0 20 20"
-                    >
-
-                        <path d="m6 10 3 3 6-6" />
-                    </svg>
-                    {/* Checkmark icon that will appear when checked */}
-                    {showComments && <img src={"data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m6 10 3 3 6-6'/%3e%3c/svg%3e"}></img>
-                    }
-                </label>
-                <label htmlFor="chkShowComments" className="ml-3 block text-sm font-medium text-gray-700">
-                    Show Timesheet Comments?
-                </label>
-            </div>
-
-            <div className="flex items-center mb-12">
-                {/* The actual checkbox */}
-                <input
-                    type="checkbox"
-                    id="chkPeriodDecimalMark"
-                    className="peer hidden"
-                    checked={isPeriodDecimalMark}
-                    onChange={handleDecimalMarkChange}
-                />
-
-                {/* Label as custom styled checkbox */}
-                <label htmlFor="chkPeriodDecimalMark"
-                    className="w-6 h-6 flex items-center justify-center border-2 border-gray-300 rounded-md peer-checked:bg-primary peer-checked:border-primary2 peer-checked:ring-2 peer-checked:ring-primary cursor-pointer"
-                >
-                    <svg
-                        className="w-4 h-4 text-white opacity-0 peer-checked:opacity-100"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="3"
-                        viewBox="0 0 20 20"
-                    >
-
-                        <path d="m6 10 3 3 6-6" />
-                    </svg>
-                    {/* Checkmark icon that will appear when checked */}
-                    {isPeriodDecimalMark && <img src={"data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m6 10 3 3 6-6'/%3e%3c/svg%3e"}></img>
-                    }
-                </label>
-                <label htmlFor="chkPeriodDecimalMark" className="ml-3 block text-sm font-medium text-gray-700">
-                    Decimal Mark: <span className="text-sm text-gray-500">(Check for period (.) or uncheck for comma (,))</span>
-                </label>
-            </div>
-
-            <div className="flex items-center mb-12">
-                {/* The actual checkbox */}
-                <input
-                    type="checkbox"
-                    id="chkIsContractual"
-                    className="peer hidden"
-                    checked={isContractual}
-                    onChange={handleIsContractualChange}
-                />
-
-                {/* Label as custom styled checkbox */}
-                <label htmlFor="chkIsContractual"
-                    className="w-6 h-6 flex items-center justify-center border-2 border-gray-300 rounded-md peer-checked:bg-primary peer-checked:border-primary2 peer-checked:ring-2 peer-checked:ring-primary cursor-pointer"
-                >
-                    <svg
-                        className="w-4 h-4 text-white opacity-0 peer-checked:opacity-100"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="3"
-                        viewBox="0 0 20 20"
-                    >
-
-                        <path d="m6 10 3 3 6-6" />
-                    </svg>
-                    {/* Checkmark icon that will appear when checked */}
-                    {isContractual && <img src={"data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m6 10 3 3 6-6'/%3e%3c/svg%3e"}></img>
-                    }
-                </label>
-                <label htmlFor="chkIsContractual" className="ml-3 block text-sm font-medium text-gray-700">
-                    Contractual? <span className="text-sm text-gray-500">(Are you a contractual employee?)</span>
-                </label>
-            </div>
-
-            {/* New checkbox for "Auto Submit Timesheet" */}
-            <div className="flex items-center mb-12">
-                <input
-                    type="checkbox"
-                    id="chkAutoSubmitTimesheet"
-                    className="peer hidden"
-                    checked={autoSubmitTimesheet}
-                    onChange={handleAutoSubmitTimesheetChange}
-                />
-                <label htmlFor="chkAutoSubmitTimesheet"
-                    className="w-6 h-6 flex items-center justify-center border-2 border-gray-300 rounded-md peer-checked:bg-primary peer-checked:border-primary2 peer-checked:ring-2 peer-checked:ring-primary cursor-pointer"
-                >
-                    <svg
-                        className="w-4 h-4 text-white opacity-0 peer-checked:opacity-100"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="3"
-                        viewBox="0 0 20 20"
-                    >
-                        <path d="m6 10 3 3 6-6" />
-                    </svg>
-                    {autoSubmitTimesheet && <img src={"data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m6 10 3 3 6-6'/%3e%3c/svg%3e"}></img>}
-                </label>
-                <label htmlFor="chkAutoSubmitTimesheet" className="ml-3 block text-sm font-medium text-gray-700">
-                    Auto Submit Timesheet
-                </label>
-            </div>
-
-            <div className="mb-12">
-                <label className="block text-sm font-medium text-gray-700 mb-2">Oracle Entity:</label>
-                <FuseCombobox
-                    placeholder="Select Oracle Entity"
-                    items={oracleEntities}
-                    selectedItem={oracleEntity}
-                    onItemSelect={handleOracleEntityChange}
-                    labelKey={"description"}
-                    valueKey={"id"}
-                />
-            </div>
             <div className="">
-                <label className="block text-sm font-medium text-gray-700 mb-2">Billable Goal:</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Yearly Hours Goal:</label>
                 <FuseInput
                     name="billableGoal"
                     value={String(billableGoal)}

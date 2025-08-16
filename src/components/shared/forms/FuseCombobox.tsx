@@ -65,12 +65,12 @@ const FuseCombobox = <T,>({
   // Helper function to get the string used for the ComboboxInput display and for filtering
   const getItemDisplayAndSearchString = (item: T): string => {
     if (item === null || item === undefined) return "";
-    
+
     // Priority 1: If getSearchableString is provided, use it for both display and search
     if (getSearchableString) {
       return getSearchableString(item);
     }
-    
+
     // Priority 2: If labelKey is a function, we try to extract text from its ReactNode output.
     // This ensures the input displays the actual label content, not the ID.
     if (typeof labelKey === "function") {
@@ -101,10 +101,10 @@ const FuseCombobox = <T,>({
     const fItems = !query
       ? items
       : items.filter((item) => {
-          // Always use the robust string for filtering
-          const itemLabel = getItemDisplayAndSearchString(item);
-          return itemLabel.toLowerCase().includes(query.toLowerCase());
-        });
+        // Always use the robust string for filtering
+        const itemLabel = getItemDisplayAndSearchString(item);
+        return itemLabel.toLowerCase().includes(query.toLowerCase());
+      });
 
     setFilteredItems(fItems);
   }, [query, onQueryChange, items, labelKey, getSearchableString]); // Add new prop to dependencies
@@ -167,7 +167,7 @@ const FuseCombobox = <T,>({
         padding: 0,
         boxSizing: "border-box",
         zIndex: 9999,
-        maxHeight: "500px", 
+        maxHeight: "500px",
         overflowY: "auto",
       }}
       className="bg-white border border-gray-300 rounded-md shadow-lg focus:outline-none"
@@ -178,8 +178,7 @@ const FuseCombobox = <T,>({
             key={String(item[valueKey])}
             value={item}
             className={({ active }) =>
-              `cursor-pointer select-none relative py-2 pl-4 pr-4 ${
-                active ? "text-white bg-primary" : "text-gray-900 dark:text-white"
+              `cursor-pointer select-none relative py-2 pl-4 pr-4  text-sm ${active ? "text-white bg-primary" : "text-gray-900 dark:text-white"
               }`
             }
           >

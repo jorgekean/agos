@@ -174,7 +174,7 @@ const AddTimeButton = forwardRef<AddTimeButtonRef, AddTimeButtonProps>(
                         aria-haspopup="true"
                         aria-expanded={isOpen}
                     >
-                        <FaClock className="text-primary" size={18} />
+                        <FaClock className="text-primary" size={20} />
                     </button>
                     {isOpen && ReactDOM.createPortal(dropdownContent, document.body)}
                 </div>

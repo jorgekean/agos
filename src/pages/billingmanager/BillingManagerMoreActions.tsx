@@ -410,15 +410,6 @@ const BillingManagerMoreActions = () => {
                     </div>
                 </FuseTooltip>
 
-                <FuseTooltip content="Billable Achievement Goal">
-                    <div
-                        className="w-8 h-8 flex items-center justify-center bg-purple-100 hover:bg-purple-200 rounded-full cursor-pointer transition-all"
-                        onClick={GenerateBillableAchievementReportData}
-                        title="Export"
-                    >
-                        <FaTrophy className="text-yellow-600" />
-                    </div>
-                </FuseTooltip>
                 {/* <button
                     className="w-8 h-8 flex items-center justify-center bg-gray-100 hover:bg-gray-200 rounded-full cursor-pointer transition-all"
                     onClick={() => GenerateBillableAchivementReport}
