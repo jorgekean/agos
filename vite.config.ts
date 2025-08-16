@@ -8,18 +8,18 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate', // Automatically update the service worker when a new version is available
       manifest: {
-        name: 'Fuse Web App',
-        short_name: 'FuseWeb',
-        description: 'Time tracking and automatic oracle upload.',
+        name: 'Agos',
+        short_name: 'Agos',
+        description: 'Time tracking and reporting tool.',
         theme_color: '#F2F3F4',// graymatter-50
         icons: [
           {
-            src: '/Purple200.png',
+            src: '/agos/agos-logo.png',
             sizes: '192x192',
             type: 'image/png',
           },
           {
-            src: '/Purple500.png',
+            src: '/agos/agos-logo.png',
             sizes: '512x512',
             type: 'image/png',
           },
