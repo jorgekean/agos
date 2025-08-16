@@ -90,28 +90,28 @@ const Navigation: React.FC = () => {
         <NavigationItem
           icon={<FaClock size={isCollapsed ? 20 : 20} />}
           text="TIME TRACK"
-          to="/"
+          to="/agos"
           activePath={location.pathname}
           isCollapsed={isCollapsed}
         />
         <NavigationItem
           icon={<FaFileAlt size={isCollapsed ? 20 : 20} />}
           text="PROJECT SETUP"
-          to="/billingmanager"
+          to="/agos/billingmanager"
           activePath={location.pathname}
           isCollapsed={isCollapsed}
         />
         <NavigationItem
           icon={<FaChartSimple size={isCollapsed ? 20 : 20} />}
           text="REPORTS"
-          to="/oracleupload"
+          to="/agos/oracleupload"
           activePath={location.pathname}
           isCollapsed={isCollapsed}
         />
         <NavigationItem
           icon={<FaCog size={isCollapsed ? 20 : 20} />}
           text="SETTINGS"
-          to="/settings"
+          to="/agos/settings"
           activePath={location.pathname}
           isCollapsed={isCollapsed}
         />

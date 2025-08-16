@@ -4,13 +4,15 @@ import OracleUpload from "./pages/oracleupload/Index"
 import Settings from "./pages/settings/Index"
 import Timesheet from "./pages/timesheet/Index"
 
+const baseUrl = "/agos";
+
 const routes = [
   {
-    path: "",
+    path: baseUrl,
     element: <Timesheet />,
   },
   {
-    path: "oracleupload",
+    path: `${baseUrl}/oracleupload`,
     element: <OracleUpload />,
   },
   // {
@@ -18,15 +20,15 @@ const routes = [
   //     element: <Timesheet />,
   // },
   {
-    path: "billingmanager",
+    path: `${baseUrl}/billingmanager`,
     element: <BillingManager />,
   },
   {
-    path: "settings",
+    path: `${baseUrl}/settings`,
     element: <Settings />,
   },
   {
-    path: "dailystatusreport",
+    path: `${baseUrl}/dailystatusreport`,
     element: <DailyStatusReport />,
   },
 ]
