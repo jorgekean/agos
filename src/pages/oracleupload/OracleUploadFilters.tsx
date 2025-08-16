@@ -222,18 +222,18 @@ const OracleUploadFilters: React.FC<FilterComponentProps> = () => {
 
   return (
     <>
-      {!extensionInstalled && (
+      {/* {!extensionInstalled && (
         <div className="w-full mb-4 bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded relative" role="alert">
           <div className="flex items-center">
             <strong className="font-bold flex items-center mr-2">
               <span className="text-yellow-600 mr-1">&#9888;</span> Warning!
             </strong>
           </div>
-          {/* Each <p> tag now stands alone, ensuring it takes up its own line */}
+          
           <p className="mt-1">Oops! Looks like the Oracle Uploader extension isn’t installed or can’t be found.</p>
           <p className="mt-1">To unlock the full magic, go ahead and install it. Need help? Just click the little help icon above – it’s got all the secrets!</p>
         </div>
-      )}
+      )} */}
       <div className="flex flex-col md:flex-row items-start md:items-center mb-3 space-y-2 md:space-y-0 md:space-x-4 max-w-full">
         {/* Wider container for the FuseCombobox */}
         <div className="w-full md:w-1/3">

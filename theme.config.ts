@@ -35,24 +35,20 @@ const themes = {
     },
     WTWGreen: {
         name: "WTWGreen",
-        primary: "#15494C",// infinity-700
-        primary2: "#1B6768",// infinity-600
-        primary3: "#208382",// infinity-500
-        primary4: "#51E0D0",//infinity-200
-        primary5: "#DFF9F6",// infinity-50
-        secondary: "#27C2B6", // infinity-300
-        secondary2: "#29D5C4",// infinity-250
-        secondary3: "#90EBE1",// infinity-150
-        secondary4: "#C3F4EF",// infinity-100
-        secondary5: "#ECFCFA",// inmfinty-25
-        // navigation: "#ffffff",
-        // navigationtext: "#007d61",
-        // fuselighttext: "#F6FDFC",
-        // fusedarktext: "#091A1C",
-        navigation: "#15494C",
-        navigationtext: "#F6FDFC",
-        fuselighttext: "#F6FDFC",
-        fusedarktext: "#091A1C",
+        primary: "#15494C",      // Deep, dark teal base (same as original)
+        primary2: "#2A666A",     // Slightly lighter shade for hovers
+        primary3: "#34A88F",     // A rich, elegant emerald for primary actions
+        primary4: "#88D4C2",     // A softer, muted teal for highlights
+        primary5: "#E8F7F4",     // Very light tint for backgrounds
+        secondary: "#4DC4AD",    // A complementary vibrant-yet-soft teal
+        secondary2: "#6FE3BF",   // Lighter version for secondary hovers
+        secondary3: "#A3E4D7",
+        secondary4: "#D1F2EB",
+        secondary5: "#F0FAF8",
+        navigation: "#FFFFFF",
+        navigationtext: "#15494C", // High contrast text
+        fuselighttext: "#F8FBFB",
+        fusedarktext: "#0A2022",    // A near-black with a hint of green
     },
     WTWBrand: {
         name: "WTWBrand",

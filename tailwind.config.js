@@ -4,8 +4,11 @@ module.exports = {
     safelist: [
         { pattern: /(primary|primary2|primary3|primary4|primary5|secondary|secondary2|secondary3|secondary4|secondary5|navigation|navigationtext|fusedarktext|fuselighttext)/ },
     ],
-    theme: {        
+    theme: {
         extend: {
+            fontFamily: {
+                sans: ['Inter', 'sans-serif'], // Sets Inter as the default sans-serif font
+            },
             colors: {
                 primary: "var(--primary)",
                 primary2: "var(--primary2)",
@@ -21,7 +24,7 @@ module.exports = {
                 navigationtext: "var(--navigationtext)",
                 fusedarktext: "var(--fusedarktext)",
                 fuselighttext: "var(--fuselighttext)",
-              },
+            },
         },
     },
     plugins: [],

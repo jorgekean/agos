@@ -289,7 +289,7 @@ const BillingManagerTable: React.FC<BillingManagerTableProps> = ({ }) => {
   return (
     <div >
       <div
-        className="bg-white dark:bg-gray-800 p-4 shadow-md sticky  sm:top-[15%] md:top-[10%] lg:top-[0%] xl:top-[0%] z-20">
+        className="bg-white dark:bg-gray-800 p-4 shadow-md">
         <div className="flex flex-wrap justify-between items-center mb-2 gap-4">
           <input
             type="text"

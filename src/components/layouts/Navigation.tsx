@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { FaCog, FaBars, FaCoins } from "react-icons/fa";
-import Logo from "../../assets/orig.png";
-import WTWPurpleLogo from "../../assets/purple.png";
-import WTWGreenLogo from "../../assets/green.png";
-import WtwBrandLogo from "../../assets/brand.png";
+import { FaCog, FaBars, FaCoins, FaFileAlt, FaRegClock } from "react-icons/fa";
+import Logo from "../../assets/agos-logo.png";
 
-import { FaChartSimple, FaClockRotateLeft, FaCloudArrowUp } from "react-icons/fa6";
+import { FaChartSimple, FaClock, FaClockRotateLeft, FaCloudArrowUp } from "react-icons/fa6";
 import { NavLink, useLocation } from "react-router-dom";
 import { useTheme } from "../../context/ThemeContext";
 
@@ -27,12 +24,12 @@ const NavigationItem: React.FC<NavigationItemProps> = ({
 }) => {
   return (
     <li
-      className={`hover:bg-gray-300 hover:bg-opacity-50 
+      className={`hover:bg-primary5 hover:bg-opacity-50 
                     p-2 rounded flex items-center space-x-3                     
-                    ${activePath === to ? "bg-gray-300 bg-opacity-50" : ""
+                    ${activePath === to ? "bg-primary5 bg-opacity-50" : ""
         }`}
     >
-      <NavLink to={to} className="flex items-center">
+      <NavLink to={to} className="flex items-center text-sm">
         {icon}
         {!isCollapsed ? <span className="ml-2">{text}</span> : null}
       </NavLink>
@@ -45,22 +42,6 @@ const Navigation: React.FC = () => {
   const location = useLocation();
   const { theme } = useTheme();
 
-  // Dynamically select logo based on the theme
-  let logoSrc;
-  switch (theme) {
-    case "WTWBrand":
-      logoSrc = WtwBrandLogo;
-      break;
-    case "WTWPurple":
-      logoSrc = WTWPurpleLogo;
-      break;
-    case "WTWGreen":
-      logoSrc = WTWGreenLogo;
-      break;
-    default:
-      logoSrc = Logo;
-      break;
-  }
 
   const toggleNavigation = () => {
     setIsCollapsed(!isCollapsed);
@@ -101,48 +82,39 @@ const Navigation: React.FC = () => {
 
       {/* Logo */}
       {isCollapsed ? null : (<div className="flex items-center justify-center">
-        <img src={logoSrc} alt="Logo" />
+        <img src={Logo} alt="Logo" />
       </div>)}
 
       {/* Navigation Items */}
       <ul className={`space-y-4 text-navigationtext ${isCollapsed ? "mt-4" : ""}`}>
         <NavigationItem
-          icon={<FaClockRotateLeft size={isCollapsed ? 20 : 30} />}
-          text="TIME TRACKING"
+          icon={<FaClock size={isCollapsed ? 20 : 20} />}
+          text="TIME TRACK"
           to="/"
           activePath={location.pathname}
           isCollapsed={isCollapsed}
         />
         <NavigationItem
-          icon={<FaCoins size={isCollapsed ? 20 : 30} />}
-          text="BILLING MANAGER"
+          icon={<FaFileAlt size={isCollapsed ? 20 : 20} />}
+          text="PROJECT SETUP"
           to="/billingmanager"
           activePath={location.pathname}
           isCollapsed={isCollapsed}
         />
         <NavigationItem
-          icon={<FaCloudArrowUp size={isCollapsed ? 20 : 30} />}
-          text="ORACLE UPLOAD"
+          icon={<FaChartSimple size={isCollapsed ? 20 : 20} />}
+          text="REPORTS"
           to="/oracleupload"
           activePath={location.pathname}
           isCollapsed={isCollapsed}
         />
         <NavigationItem
-          icon={<FaCog size={isCollapsed ? 20 : 30} />}
+          icon={<FaCog size={isCollapsed ? 20 : 20} />}
           text="SETTINGS"
           to="/settings"
           activePath={location.pathname}
           isCollapsed={isCollapsed}
         />
-        {/* Uncomment if needed
-        <NavigationItem
-          icon={<FaChartSimple size={30} />}
-          text="DAILY STATUS REPORT"
-          to="/dailystatusreport"
-          activePath={location.pathname}
-          isCollapsed={isCollapsed}
-        />
-        */}
       </ul>
     </nav>
   );

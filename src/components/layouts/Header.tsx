@@ -443,7 +443,7 @@ const Header: React.FC = () => {
                 </FuseTooltip>
 
                 {/* Help Button */}
-                <FuseTooltip
+                {/* <FuseTooltip
                     content="Help"
                 >
                     <button
@@ -459,9 +459,9 @@ const Header: React.FC = () => {
                         </div>)
                     }
 
-                </FuseTooltip>
+                </FuseTooltip> */}
                 {/* Report a Bug Button */}
-                <FuseTooltip
+                {/* <FuseTooltip
                     content="Report a bug"
                 >
                     <button
@@ -471,8 +471,8 @@ const Header: React.FC = () => {
                     >
                         <FaBug size={22} />
                     </button>
-                </FuseTooltip>
-                <FuseTooltip
+                </FuseTooltip> */}
+                {/* <FuseTooltip
                     content="Suggestions or enhancements"
                 >
                     <button
@@ -482,7 +482,7 @@ const Header: React.FC = () => {
                     >
                         <FaLightbulb size={22} />
                     </button>
-                </FuseTooltip>
+                </FuseTooltip> */}
                 {/* Settings Button */}
                 <button
                     onClick={togglePopover}

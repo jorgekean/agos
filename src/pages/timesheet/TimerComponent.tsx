@@ -6,7 +6,7 @@ import { TimesheetData } from "../../models/Timesheet";
 import { sortBy, times } from "lodash";
 import DexieUtils from "../../utils/dexie-utils";
 import toast from "react-hot-toast";
-import { FaClock, FaPencilAlt } from "react-icons/fa";
+import { FaClock, FaPencilAlt, FaRegPauseCircle, FaRegPlayCircle } from "react-icons/fa";
 import AddTimeButton, { AddTimeButtonRef } from "./AddTimeButton";
 
 interface TimerComponentProps {
@@ -228,10 +228,10 @@ const TimerComponent: React.FC<TimerComponentProps> = ({ timesheet, updateData }
           }`}
       >
         {isRunning ? (
-          <Pause size={24} className="animate-pulse" />
+          <FaRegPauseCircle size={30} className="animate-pulse" />
         ) : (
-          <Play
-            size={24}
+          <FaRegPlayCircle
+            size={30}
             className="hover:text-primary"
           />
         )}

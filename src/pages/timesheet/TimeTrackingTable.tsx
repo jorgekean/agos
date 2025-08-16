@@ -15,6 +15,7 @@ import { MiscTimeData } from "../../models/MiscTime";
 import { debounce } from "lodash";
 import { FiArrowDown, FiArrowUp } from "react-icons/fi";
 
+import clsx from 'clsx';
 import { v4 as uuidv4 } from "uuid"
 import { InputCellRenderer } from "../../components/shared/cellwrapper/InputCellRenderer";
 import ProjectCellEditor from "./celleditor/ProjectCellEditor";
@@ -455,9 +456,10 @@ const TimeTrackingTable: React.FC<TimeTrackingTableProps> = () => {
             <div className="flex justify-center">
               <button
                 onClick={() => handleDelete(row.original.id)}
-                className="text-secondary2 hover:text-secondary"
+                aria-label="Delete item"
+                className="p-2 rounded-full text-red-500 hover:bg-red-100 dark:hover:bg-red-900/50 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
               >
-                <FaTrash size={20} />
+                <FaTrash size={16} />
               </button>
             </div>
           ),
@@ -555,25 +557,31 @@ const TimeTrackingTable: React.FC<TimeTrackingTableProps> = () => {
               {rows.map((row, index) => {
                 prepareRow(row);
                 const isRunning = row.original.running;
+                const isEditing = editingTimesheet?.id === row.original.id;
                 const { key, ...rowProps } = row.getRowProps();
+
                 return (
                   <tr
                     key={row.id}
                     {...rowProps}
-                    className={`
-                      ${editingTimesheet?.id === row.original.id ? "bg-primary5" : index % 2 === 0
-                        ? "bg-gray-50 dark:bg-gray-500"
-                        : "bg-white dark:bg-gray-600"}
-                        ${editingTimesheet?.id === row.original.id ? "" : "hover:bg-gray-100 dark:hover:bg-gray-400 "} transition-colors
-                        ${isRunning
-                        ? "text-primary font-bold border-l-4 border-primary2 !bg-primary5 bg-opacity-20"
-                        : ""
+                    // UPDATED: Using clsx for clean, readable conditional classes
+                    className={clsx(
+                      'transition-colors duration-150',
+                      // Default hover state, but disabled if we are editing that row
+                      !isEditing && 'hover:bg-gray-50 dark:hover:bg-gray-800/50',
+                      {
+                        // Special state for the currently "running" timer
+                        'font-semibold text-primary border-l-4 border-primary bg-primary5/30 dark:bg-primary/10': isRunning,
+                        // Special state for the row currently being edited
+                        'bg-indigo-50 dark:bg-indigo-900/20': isEditing,
+                        // Default background for non-special rows
+                        'bg-white dark:bg-gray-800': !isRunning && !isEditing,
                       }
-                        `}
+                    )}
                   >
-
                     {showSelectOptions && (
-                      <td className="p-3 text-center">
+                      // UPDATED: Cell styles are now more specific for padding and borders
+                      <td className="p-3 text-center border-b border-gray-200 dark:border-gray-700">
                         <input
                           type="checkbox"
                           checked={selectedRows.some(
@@ -582,14 +590,20 @@ const TimeTrackingTable: React.FC<TimeTrackingTableProps> = () => {
                           onChange={(e) =>
                             handleCheckboxChange(e, row.original)
                           }
-                          className="form-checkbox h-5 w-5 text-primary border-gray-300 focus:ring focus:ring-primary4 focus:ring-opacity-50 rounded"
+                          // UPDATED: Smaller, cleaner checkbox style
+                          className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary/50 focus:ring-offset-0 dark:bg-gray-700 dark:border-gray-600"
                         />
                       </td>
                     )}
                     {row.cells.map((cell) => {
                       const { key, ...cellProps } = cell.getCellProps();
                       return (
-                        <td {...cellProps} key={cell.column.id} className="p-3">
+                        <td
+                          {...cellProps}
+                          key={cell.column.id}
+                          // UPDATED: All cells get padding, smaller text, and a bottom border
+                          className="py-3 px-4 text-sm text-gray-700 dark:text-gray-300 border-b border-gray-200 dark:border-gray-700"
+                        >
                           {cell.render("Cell")}
                         </td>
                       );

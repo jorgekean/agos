@@ -374,7 +374,7 @@ const OracleUploadFooter: React.FC<OracleUploadFooterProps> = () => {
 
   return (
     <div className="flex justify-end space-x-2">
-      <button
+      {/* <button
         type="submit"
         onClick={handleMessage}
         disabled={!extensionInstalled}
@@ -385,7 +385,7 @@ const OracleUploadFooter: React.FC<OracleUploadFooterProps> = () => {
 
         <FaUpload size={16} />
         <span>Upload</span>
-      </button>
+      </button> */}
 
       <button
         type="button"

@@ -12,7 +12,7 @@ import { useGlobalContext } from "./context/GlobalContext"
 import { useTheme } from "./context/ThemeContext"
 import { AuthenticatedTemplate, UnauthenticatedTemplate, useMsal } from "@azure/msal-react";
 import { InteractionRequiredAuthError } from "@azure/msal-browser";
-import { loginRequest } from "./utils/auth.config";
+// import { loginRequest } from "./utils/auth.config";
 import LoginPage from "./components/layouts/LoginPage"
 import { EXTENSION_ID } from "./utils/extensions.util"
 import { TimesheetService } from "./pages/timesheet/TimesheetService"
@@ -29,8 +29,9 @@ import { timeOptions } from "./utils/constants"
 import ModalFooterWithDropdown from "./components/shared/ModalFooterWithDropdown"
 
 function App() {
-  const { accounts, instance } = useMsal();
-  const activeAccount = instance.getActiveAccount();
+  const accounts = [{ name: "", username: "" }]
+  // const { accounts, instance } = useMsal();
+  // const activeAccount = instance.getActiveAccount();
 
 
   const content = useRoutes(routes)
@@ -302,7 +303,7 @@ function App() {
   const handleModal = () => {
     setModalState({
       showModal: true,
-      title : 'Reminder',
+      title: 'Reminder',
       body: <div>It's time to submit your timesheet. Ready to proceed?</div>,
       footer: (
         <ModalFooterWithDropdown
@@ -328,7 +329,7 @@ function App() {
       )
       const now = new Date()
 
-      const isFriday = today.getDay() ===5
+      const isFriday = today.getDay() === 5
       const isMonthEnd = today.getDate() === new Date(today.getFullYear(), today.getMonth() + 1, 0).getDate()
       // Check if the reminder should trigger
       const shouldTriggerReminder =
@@ -485,32 +486,32 @@ function App() {
 
   useEffect(() => {
     // set localStorage browser extensionid
-    localStorage.setItem("FUSE_EXTENSIONID", EXTENSION_ID)
+    // localStorage.setItem("FUSE_EXTENSIONID", EXTENSION_ID)
 
 
-    const silentLogin = async () => {
-      try {
-        // Handle the redirect if it occurs
-        const authResult = await instance.handleRedirectPromise();
-        if (authResult) {
-          console.log("Redirect handled:", authResult);
-          return;
-        }
+    // const silentLogin = async () => {
+    //   try {
+    //     // Handle the redirect if it occurs
+    //     const authResult = await instance.handleRedirectPromise();
+    //     if (authResult) {
+    //       console.log("Redirect handled:", authResult);
+    //       return;
+    //     }
 
-        const tokenResponse = await instance.acquireTokenSilent(loginRequest);
-        console.log("Token acquired silently:", tokenResponse);
-        // You can use the token to make API calls here
-      } catch (error) {
-        if (error instanceof InteractionRequiredAuthError) {
-          // Fallback to interactive login if silent authentication fails          
-          instance.loginPopup();
-        } else {
-          console.log("Authentication error:", error);
-        }
-      }
-    };
+    //     const tokenResponse = await instance.acquireTokenSilent(loginRequest);
+    //     console.log("Token acquired silently:", tokenResponse);
+    //     // You can use the token to make API calls here
+    //   } catch (error) {
+    //     if (error instanceof InteractionRequiredAuthError) {
+    //       // Fallback to interactive login if silent authentication fails          
+    //       instance.loginPopup();
+    //     } else {
+    //       console.log("Authentication error:", error);
+    //     }
+    //   }
+    // };
 
-    silentLogin();
+    // silentLogin();
   }, []);
 
   useEffect(() => {
@@ -565,27 +566,29 @@ function App() {
   }, [theme]); // Update favicon when template changes
 
 
-  const handleLoginRedirect = () => {
-    instance.loginPopup({ ...loginRequest }).then(response => {
-      //Process when logging in
-    })
-      .catch(error => {
-        console.error('Login error:', error);
-      });
-  };
+  // const handleLoginRedirect = () => {
+  //   instance.loginPopup({ ...loginRequest }).then(response => {
+  //     //Process when logging in
+  //   })
+  //     .catch(error => {
+  //       console.error('Login error:', error);
+  //     });
+  // };
 
+
+  //  <UnauthenticatedTemplate>
+  //       <>
+  //         <LoginPage onClickLogin={handleLoginRedirect}></LoginPage>
+  //       </>
+  //     </UnauthenticatedTemplate>
   return (
     <>
-      <AuthenticatedTemplate>
-        <AdminLayout>
-          <Content>{content}</Content>
-        </AdminLayout>
-      </AuthenticatedTemplate>
-      <UnauthenticatedTemplate>
-        <>
-          <LoginPage onClickLogin={handleLoginRedirect}></LoginPage>
-        </>
-      </UnauthenticatedTemplate>
+      {/* <AuthenticatedTemplate> */}
+      <AdminLayout>
+        <Content>{content}</Content>
+      </AdminLayout>
+      {/* </AuthenticatedTemplate> */}
+
     </>
 
   )

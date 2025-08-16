@@ -58,7 +58,7 @@ const initialState: BillingManagerData = {
     selectedBillingType: null,
 
     selectedRows: [],
-    showSelectOptions: true,
+    showSelectOptions: false,
     selectAllChecked: false
 }
 

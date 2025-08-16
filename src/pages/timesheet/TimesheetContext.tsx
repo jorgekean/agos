@@ -38,7 +38,7 @@ interface Action {
 
 const initialState: TimesheetContextData = {
     selectedRows: [],
-    showSelectOptions: true,
+    showSelectOptions: false,
     copiedRows: [],
     sortConfig: {
         key: "createdDate", // Default sorting key

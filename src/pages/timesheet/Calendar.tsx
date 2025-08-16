@@ -12,9 +12,10 @@ import { TimesheetService } from "./TimesheetService"
 import { TimesheetData } from "../../models/Timesheet"
 import FuseCombobox from "../../components/shared/forms/FuseCombobox"
 import { Button } from "@headlessui/react"
-import { FaLocationArrow } from "react-icons/fa"
+import { FaCalendarDay, FaLocationArrow } from "react-icons/fa"
 import FuseTooltip from "../../components/shared/FuseTooltip"
 import { GoMoveToEnd } from "react-icons/go"
+import { FiChevronLeft, FiChevronRight } from "react-icons/fi"
 
 interface CalendarProps { }
 
@@ -108,39 +109,60 @@ const Calendar = ({ }: CalendarProps) => {
 
   return (
     <form className="flex items-center">
-      <div className="flex items-center space-x-4">
+      <div className="flex items-center space-x-2 bg-primary5 dark:bg-gray-900/50 p-1.5 rounded-xl border border-gray-200 dark:border-gray-700">
+        {/* UPDATED: Buttons are now rounded with a subtle background on hover for better UX */}
         <button
           type="button"
           onClick={handlePrevDay}
-          className="text-gray-600 hover:text-gray-800 dark:hover:text-gray-300"
+          className="p-2 rounded-full text-gray-500 hover:text-gray-900 hover:bg-gray-200 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          aria-label="Previous Day"
         >
-          <ChevronLeft className="h-5 w-5" />
+          <FiChevronLeft className="h-5 w-5" />
         </button>
+
         <DatePicker
           selected={timesheetDate}
           onChange={handleDateChange}
           dateFormat="MMMM d, yyyy - EEE"
-          className={`${isToday ? 'font-bold bg-white' : 'bg-slate-200 font-bold'} text-center py-2 px-4 rounded-md border border-gray-300 bg-gray-50 dark:bg-gray-800 dark:text-gray-200`}
+          // UPDATED: Cleaned up and modernized the styling with a clear 'today' state
+          className={`
+                    min-w-[280px] text-center font-semibold py-2 px-4 rounded-lg
+                    border-2 transition-colors duration-200 cursor-pointer
+                    focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary2
+                    ${isToday
+              ? 'bg-white text-primary3 border-transparent'
+              : 'bg-gray-200  hover:bg-gray-200 border-gray-300 text-gray-800'
+            }
+                    dark:bg-gray-800 dark:border-gray-600
+                    ${isToday
+              ? 'dark:bg-indigo-900/50 dark:text-indigo-300'
+              : 'dark:text-gray-200 dark:hover:bg-gray-700/50'
+            }
+                `}
         />
+
         <button
           type="button"
           onClick={handleNextDay}
-          className="text-gray-600 hover:text-gray-800 dark:hover:text-gray-300"
+          className="p-2 rounded-full text-gray-500 hover:text-gray-900 hover:bg-gray-200 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          aria-label="Next Day"
         >
-          <ChevronRight className="h-5 w-5" />
+          <FiChevronRight className="h-5 w-5" />
         </button>
 
         <FuseTooltip content="Go to today's timesheet">
           <button
             type="button"
             onClick={goToToday}
-            className="text-gray-600 hover:text-gray-800 dark:hover:text-gray-300"
+            className="p-2 rounded-full text-gray-500 hover:text-gray-900 hover:bg-gray-200 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary2"
+            aria-label="Go to Today"
           >
-            <GoMoveToEnd className="h-5 w-5" />
+            {/* NEW: Using a more intuitive icon for 'Today' */}
+            <FaCalendarDay className="h-5 w-5" />
           </button>
         </FuseTooltip>
       </div>
-      <div className="ml-auto w-1/3">
+      {/* <div className="ml-auto w-1/3">
         <FuseCombobox
           placeholder="Select work location"
           items={workLocations}
@@ -149,7 +171,7 @@ const Calendar = ({ }: CalendarProps) => {
           labelKey={"description"}
           valueKey={"id"}
         />
-      </div>
+      </div> */}
     </form>
   )
 }

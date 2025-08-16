@@ -20,12 +20,14 @@ const Timesheet = () => {
     return (
         <React.Fragment>
             <TimesheetContextProvider>
-                <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md sticky top-0 z-20">
+                <div className="flex flex-col gap-y-4 bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md sticky top-0 z-20">
                     <Calendar />
-                </div>
-                <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md sticky top-24 z-10">
                     <TimesheetForm />
                 </div>
+                {/* <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md sticky top-24 z-10">
+                    <Calendar />
+                    <TimesheetForm />
+                </div> */}
                 <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md">
                     <TimeTrackingTable />
                 </div>

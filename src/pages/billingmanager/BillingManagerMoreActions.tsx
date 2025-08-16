@@ -10,7 +10,7 @@ import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 import FuseTooltip from "../../components/shared/FuseTooltip";
 import { useGlobalContext } from "../../context/GlobalContext";
-import { Page, Text, View, Document, StyleSheet, pdf  as pdfGen } from '@react-pdf/renderer';
+import { Page, Text, View, Document, StyleSheet, pdf as pdfGen } from '@react-pdf/renderer';
 import { TimesheetService } from "../timesheet/TimesheetService";
 import { SettingModel } from "../../models/SettingModel";
 import { SettingsService } from "../settings/SettingsService";
@@ -39,7 +39,7 @@ const BillingManagerMoreActions = () => {
 
     const {
         timesheetDate
-      } = useGlobalContext();
+    } = useGlobalContext();
 
     const { modalState, setModalState } = useGlobalContext();
 
@@ -79,7 +79,7 @@ const BillingManagerMoreActions = () => {
                             });
                             await billingManagerService.getBillingData(searchTerm, showArchived);
                             toast.success("Billings deleted successfully", { position: "top-right" });
-                            setShowSelectOptions(true);
+                            setShowSelectOptions(false);
                             setSelectedRows([]);
 
                             setModalState({ ...modalState, showModal: false })
@@ -100,7 +100,7 @@ const BillingManagerMoreActions = () => {
         });
         await billingManagerService.getBillingData(searchTerm, showArchived);
         toast.success("Billings archived successfully", { position: "top-right" });
-        setShowSelectOptions(true);
+        setShowSelectOptions(false);
         setSelectedRows([]);
     };
 
@@ -209,163 +209,165 @@ const BillingManagerMoreActions = () => {
         }
     };
 
-    
-const styles = StyleSheet.create({
-    page: { padding: 24, fontFamily: 'Helvetica' },
-    title: { textAlign: 'center', fontSize: 24, fontWeight: 'bold', marginBottom: 8 },
-    subtitle: { textAlign: 'center', fontSize: 18, marginBottom: 16 },
-    table: { display: 'flex', flexDirection: 'column', width: '100%', marginBottom: 16 },
-    tableRow: { flexDirection: 'row' },
-    tableHeader: { backgroundColor: '#7030A0', color: 'white', fontWeight: 'bold' },
-    tableCell: { border: '1pt solid black', padding: 6, fontSize: 10, textAlign: 'center', flex: 1 },
-    red: { backgroundColor: '#F79797', fontWeight: 'bold' },
-    note: { fontSize: 10, marginTop: 12 }
-  });
-  
-  const GenerateBillableAchievementReportData =  async  () => {
 
-    const startOfYear = new Date(new Date().getFullYear(), 0, 1);
-    startOfYear.setHours(0, 0, 0, 0);
+    const styles = StyleSheet.create({
+        page: { padding: 24, fontFamily: 'Helvetica' },
+        title: { textAlign: 'center', fontSize: 24, fontWeight: 'bold', marginBottom: 8 },
+        subtitle: { textAlign: 'center', fontSize: 18, marginBottom: 16 },
+        table: { display: 'flex', flexDirection: 'column', width: '100%', marginBottom: 16 },
+        tableRow: { flexDirection: 'row' },
+        tableHeader: { backgroundColor: '#7030A0', color: 'white', fontWeight: 'bold' },
+        tableCell: { border: '1pt solid black', padding: 6, fontSize: 10, textAlign: 'center', flex: 1 },
+        red: { backgroundColor: '#F79797', fontWeight: 'bold' },
+        note: { fontSize: 10, marginTop: 12 }
+    });
 
-    const currentTimesheetThisYear =
-    await timesheetService.getTimesheetsRangeofDate(startOfYear, timesheetDate);
+    const GenerateBillableAchievementReportData = async () => {
 
-    const billableTimesheets = await 
-    billingManagerService.filterBillableTimesheets(currentTimesheetThisYear);
-        
-    const startOfMonth = new Date(timesheetDate.getFullYear(), timesheetDate.getMonth(), 1);
-    const endOfMonth = new Date(timesheetDate.getFullYear(), timesheetDate.getMonth() + 1, 0);
-    const endOfYear = new Date(timesheetDate.getFullYear(), 12, 31);
-    const monthlyTimesheets = billableTimesheets.filter(ts => {
-        const tsDate = new Date(ts.timesheetDate);
-        return tsDate >= startOfMonth && tsDate <= endOfMonth;
-      });
-    settingsService.getSettingByType("billableGoal").then((settings) => {
-        console.log("Settings:", settings);
-        const billableGoal = settings?.value || 1500; // Default to 1500 if not set
-        const monthlyBillableGoal = billableGoal/12 || 125; // Default to 125 if not set
-        const monthlyActual = timesheetService.convertBillingHours(monthlyTimesheets.reduce((acc, ts) => acc + (ts.duration || 0), 0));
-        const monthlyPercent = ((monthlyActual / billableGoal) * 100).toFixed(2) + '%';
-        const ytdActual = timesheetService.convertBillingHours(billableTimesheets.reduce((acc, ts) => acc + (ts.duration || 0), 0));
-        const ytdGoal = monthlyBillableGoal * timesheetDate.getMonth() || 0; // Default to 0 if not set
-        const ytdPercent = ((ytdActual / ytdGoal) * 100).toFixed(2) + '%';
-        const annualGoal = billableGoal; // Use the same goal for simplicity
-        const remainingDays = getRemainingWorkDays(timesheetDate, endOfYear);
-        const dailyTarget = ((billableGoal-ytdActual) / remainingDays).toFixed(2);
+        const startOfYear = new Date(new Date().getFullYear(), 0, 1);
+        startOfYear.setHours(0, 0, 0, 0);
 
-        GenerateBillableAchievementReport({
-            monthyear: new Date().getFullYear(),
-            name: accounts[0].name || 'GD Libanan',
-            billableData: {
-                monthlyGoal: billableGoal.toString(),
-                monthlyActual: monthlyActual.toString(),
-                monthlyPercent: monthlyPercent,
-                ytdGoal: ytdGoal.toString(),
-                ytdActual: ytdActual.toString(),
-                ytdPercent: ytdPercent,
-                annualGoal: annualGoal.toString(),
-                remainingDays: remainingDays.toString(),
-                dailyTarget: dailyTarget
-            }
+        const currentTimesheetThisYear =
+            await timesheetService.getTimesheetsRangeofDate(startOfYear, timesheetDate);
+
+        const billableTimesheets = await
+            billingManagerService.filterBillableTimesheets(currentTimesheetThisYear);
+
+        const startOfMonth = new Date(timesheetDate.getFullYear(), timesheetDate.getMonth(), 1);
+        const endOfMonth = new Date(timesheetDate.getFullYear(), timesheetDate.getMonth() + 1, 0);
+        const endOfYear = new Date(timesheetDate.getFullYear(), 12, 31);
+        const monthlyTimesheets = billableTimesheets.filter(ts => {
+            const tsDate = new Date(ts.timesheetDate);
+            return tsDate >= startOfMonth && tsDate <= endOfMonth;
         });
-  });
+        settingsService.getSettingByType("billableGoal").then((settings) => {
+            console.log("Settings:", settings);
+            const billableGoal = settings?.value || 1500; // Default to 1500 if not set
+            const monthlyBillableGoal = billableGoal / 12 || 125; // Default to 125 if not set
+            const monthlyActual = timesheetService.convertBillingHours(monthlyTimesheets.reduce((acc, ts) => acc + (ts.duration || 0), 0));
+            const monthlyPercent = ((monthlyActual / billableGoal) * 100).toFixed(2) + '%';
+            const ytdActual = timesheetService.convertBillingHours(billableTimesheets.reduce((acc, ts) => acc + (ts.duration || 0), 0));
+            const ytdGoal = monthlyBillableGoal * timesheetDate.getMonth() || 0; // Default to 0 if not set
+            const ytdPercent = ((ytdActual / ytdGoal) * 100).toFixed(2) + '%';
+            const annualGoal = billableGoal; // Use the same goal for simplicity
+            const remainingDays = getRemainingWorkDays(timesheetDate, endOfYear);
+            const dailyTarget = ((billableGoal - ytdActual) / remainingDays).toFixed(2);
 
-  };
+            GenerateBillableAchievementReport({
+                monthyear: new Date().getFullYear(),
+                name: accounts[0].name || 'GD Libanan',
+                billableData: {
+                    monthlyGoal: billableGoal.toString(),
+                    monthlyActual: monthlyActual.toString(),
+                    monthlyPercent: monthlyPercent,
+                    ytdGoal: ytdGoal.toString(),
+                    ytdActual: ytdActual.toString(),
+                    ytdPercent: ytdPercent,
+                    annualGoal: annualGoal.toString(),
+                    remainingDays: remainingDays.toString(),
+                    dailyTarget: dailyTarget
+                }
+            });
+        });
 
-function getRemainingWorkDays(from: Date, to: Date): number {
-  // Clone dates to avoid mutation
-  const start = new Date(from.getFullYear(), from.getMonth(), from.getDate());
-  const end = new Date(to.getFullYear(), to.getMonth(), to.getDate());
+    };
 
-  // Calculate total days between the two dates
-  const totalDays = Math.floor((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)) + 1;
+    function getRemainingWorkDays(from: Date, to: Date): number {
+        // Clone dates to avoid mutation
+        const start = new Date(from.getFullYear(), from.getMonth(), from.getDate());
+        const end = new Date(to.getFullYear(), to.getMonth(), to.getDate());
 
-  // Calculate weekdays
-  let remaining = 0;
-  for (let i = 0; i < totalDays; i++) {
-    const currentDay = new Date(start);
-    currentDay.setDate(start.getDate() + i);
-    const dayOfWeek = currentDay.getDay();
-    if (dayOfWeek !== 0 && dayOfWeek !== 6) { // Skip Sundays (0) and Saturdays (6)
-      remaining++;
+        // Calculate total days between the two dates
+        const totalDays = Math.floor((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24)) + 1;
+
+        // Calculate weekdays
+        let remaining = 0;
+        for (let i = 0; i < totalDays; i++) {
+            const currentDay = new Date(start);
+            currentDay.setDate(start.getDate() + i);
+            const dayOfWeek = currentDay.getDay();
+            if (dayOfWeek !== 0 && dayOfWeek !== 6) { // Skip Sundays (0) and Saturdays (6)
+                remaining++;
+            }
+        }
+
+        // Subtract holidays that are not in the past and fall on a weekday
+        const holidaysToSubtract = YearlyHoliday.filter(h => {
+            return (
+                h.Date > start &&
+                h.Date <= end &&
+                h.Date.getDay() !== 0 &&
+                h.Date.getDay() !== 6
+            );
+        }).length;
+
+        console.log("Remaining Work Days:", remaining, "Holidays to Subtract:", holidaysToSubtract);
+        return remaining - holidaysToSubtract;
     }
-  }
 
-  // Subtract holidays that are not in the past and fall on a weekday
-  const holidaysToSubtract = YearlyHoliday.filter(h => {
-    return (
-      h.Date > start &&
-      h.Date <= end &&
-      h.Date.getDay() !== 0 &&
-      h.Date.getDay() !== 6
-    );
-  }).length;
-
-  console.log("Remaining Work Days:", remaining, "Holidays to Subtract:", holidaysToSubtract);
-  return remaining - holidaysToSubtract;
-}
-  
-//   // Helper for PTO records (stub, adjust as needed)
-//   function getDaysFromPTORecord(day: string, noOfDays: number, from: Date): number {
-//     // You can implement your PTO logic here, for now just return noOfDays
-//     return noOfDays;
-//   }
-  
-
-  const GenerateBillableAchievementReport = async ({
-    monthyear=2025,
-    name='Gab Libanan',
-    billableData = { monthlyGoal: '0', monthlyActual: '0', monthlyPercent: '0%', ytdGoal: '0', ytdActual: '0', 
-        ytdPercent: '0%', annualGoal: '0', remainingDays: '0', dailyTarget: '0'}
-    
-  }) => {
+    //   // Helper for PTO records (stub, adjust as needed)
+    //   function getDaysFromPTORecord(day: string, noOfDays: number, from: Date): number {
+    //     // You can implement your PTO logic here, for now just return noOfDays
+    //     return noOfDays;
+    //   }
 
 
-    const todaysTimesheets =
-    await timesheetService.getTimesheetsOfTheDay();
-    console.log("Today's Timesheets:", todaysTimesheets);
+    const GenerateBillableAchievementReport = async ({
+        monthyear = 2025,
+        name = 'Gab Libanan',
+        billableData = {
+            monthlyGoal: '0', monthlyActual: '0', monthlyPercent: '0%', ytdGoal: '0', ytdActual: '0',
+            ytdPercent: '0%', annualGoal: '0', remainingDays: '0', dailyTarget: '0'
+        }
 
-    const doc = (
-      <Document>
-        <Page size="LETTER" style={styles.page}>
-          <Text style={styles.title}>Billable Achievement Report as of {monthyear}</Text>
-          <Text style={styles.subtitle}>{name}</Text>
-          <View style={styles.table}>
-            <View style={[styles.tableRow, styles.tableHeader]}>
-              <Text style={styles.tableCell}>Monthly Billable Goal</Text>
-              <Text style={styles.tableCell}>Monthly Actual</Text>
-              <Text style={styles.tableCell}>Monthly Billable %</Text>
-              <Text style={styles.tableCell}>YTD Billable Goal</Text>
-              <Text style={styles.tableCell}>YTD Actual</Text>
-              <Text style={styles.tableCell}>YTD Billable %</Text>
-              <Text style={styles.tableCell}>Annual Billable Goal</Text>
-              <Text style={styles.tableCell}>Remaining Work Days</Text>
-              <Text style={styles.tableCell}>Daily Billable Target hours to meet goal</Text>
-            </View>
-            <View style={styles.tableRow}>
-              <Text style={styles.tableCell}>{billableData.monthlyGoal}</Text>
-              <Text style={styles.tableCell}>{billableData.monthlyActual}</Text>
-              <Text style={[styles.tableCell, styles.red]}>{billableData.monthlyPercent}</Text>
-              <Text style={styles.tableCell}>{billableData.ytdGoal}</Text>
-              <Text style={styles.tableCell}>{billableData.ytdActual}</Text>
-              <Text style={[styles.tableCell, styles.red]}>{billableData.ytdPercent}</Text>
-              <Text style={styles.tableCell}>{billableData.annualGoal}</Text>
-              <Text style={styles.tableCell}>{billableData.remainingDays}</Text>
-              <Text style={[styles.tableCell, styles.red]}>{billableData.dailyTarget}</Text>
-            </View>
-          </View>
-          <Text style={styles.note}>
-            *Remaining work days does not include PTOs/OOOs and future Holidays taken by the colleague unless entered as OOO days in the setting windows.
-          </Text>
-          <Text style={styles.note}>*YTD = Year to Date</Text>
-        </Page>
-      </Document>
-    );
-  
-    const blob = await pdfGen(doc).toBlob();
-    const url = URL.createObjectURL(blob);
-    window.open(url, '_blank');
-  };
+    }) => {
+
+
+        const todaysTimesheets =
+            await timesheetService.getTimesheetsOfTheDay();
+        console.log("Today's Timesheets:", todaysTimesheets);
+
+        const doc = (
+            <Document>
+                <Page size="LETTER" style={styles.page}>
+                    <Text style={styles.title}>Billable Achievement Report as of {monthyear}</Text>
+                    <Text style={styles.subtitle}>{name}</Text>
+                    <View style={styles.table}>
+                        <View style={[styles.tableRow, styles.tableHeader]}>
+                            <Text style={styles.tableCell}>Monthly Billable Goal</Text>
+                            <Text style={styles.tableCell}>Monthly Actual</Text>
+                            <Text style={styles.tableCell}>Monthly Billable %</Text>
+                            <Text style={styles.tableCell}>YTD Billable Goal</Text>
+                            <Text style={styles.tableCell}>YTD Actual</Text>
+                            <Text style={styles.tableCell}>YTD Billable %</Text>
+                            <Text style={styles.tableCell}>Annual Billable Goal</Text>
+                            <Text style={styles.tableCell}>Remaining Work Days</Text>
+                            <Text style={styles.tableCell}>Daily Billable Target hours to meet goal</Text>
+                        </View>
+                        <View style={styles.tableRow}>
+                            <Text style={styles.tableCell}>{billableData.monthlyGoal}</Text>
+                            <Text style={styles.tableCell}>{billableData.monthlyActual}</Text>
+                            <Text style={[styles.tableCell, styles.red]}>{billableData.monthlyPercent}</Text>
+                            <Text style={styles.tableCell}>{billableData.ytdGoal}</Text>
+                            <Text style={styles.tableCell}>{billableData.ytdActual}</Text>
+                            <Text style={[styles.tableCell, styles.red]}>{billableData.ytdPercent}</Text>
+                            <Text style={styles.tableCell}>{billableData.annualGoal}</Text>
+                            <Text style={styles.tableCell}>{billableData.remainingDays}</Text>
+                            <Text style={[styles.tableCell, styles.red]}>{billableData.dailyTarget}</Text>
+                        </View>
+                    </View>
+                    <Text style={styles.note}>
+                        *Remaining work days does not include PTOs/OOOs and future Holidays taken by the colleague unless entered as OOO days in the setting windows.
+                    </Text>
+                    <Text style={styles.note}>*YTD = Year to Date</Text>
+                </Page>
+            </Document>
+        );
+
+        const blob = await pdfGen(doc).toBlob();
+        const url = URL.createObjectURL(blob);
+        window.open(url, '_blank');
+    };
     return (
         <div className="flex items-center justify-between mt-2">
             {/* Hidden file input for import */}
@@ -407,12 +409,12 @@ function getRemainingWorkDays(from: Date, to: Date): number {
                         <FaFileExport className="text-purple-600" />
                     </div>
                 </FuseTooltip>
-                
+
                 <FuseTooltip content="Billable Achievement Goal">
                     <div
                         className="w-8 h-8 flex items-center justify-center bg-purple-100 hover:bg-purple-200 rounded-full cursor-pointer transition-all"
                         onClick={GenerateBillableAchievementReportData}
-                     title="Export"
+                        title="Export"
                     >
                         <FaTrophy className="text-yellow-600" />
                     </div>
@@ -423,18 +425,18 @@ function getRemainingWorkDays(from: Date, to: Date): number {
                 ></button> */}
 
                 {showSelectOptions && (<>
-                
+
                     <FuseTooltip content="Delete Selected">
                         <div
                             className="w-8 h-8 flex items-center justify-center bg-red-100 hover:bg-red-200 rounded-full cursor-pointer transition-all"
                             onClick={
                                 selectedRows.length === 0
-                                ? () => {
+                                    ? () => {
                                         toast.error("No data is selected.", {
                                             position: "top-right",
                                         });
                                     }
-                                : () => {
+                                    : () => {
                                         handleDeleteSelected();
                                     }
                             }
@@ -455,19 +457,19 @@ function getRemainingWorkDays(from: Date, to: Date): number {
                 </>)}
 
                 {selectedRows.length > 0 && (
-                <>
-                    <FuseTooltip content="Cancel">
-                        <div
-                            className="w-8 h-8 flex items-center justify-center bg-gray-100 hover:bg-gray-200 rounded-full cursor-pointer transition-all"
-                            onClick={() => {
-                                setSelectedRows([]);
-                                setSelectAllChecked(false);
-                            }}
-                        // title="Cancel"
-                        >
-                            <FaTimes className="text-gray-600" />
-                        </div>
-                    </FuseTooltip>
+                    <>
+                        <FuseTooltip content="Cancel">
+                            <div
+                                className="w-8 h-8 flex items-center justify-center bg-gray-100 hover:bg-gray-200 rounded-full cursor-pointer transition-all"
+                                onClick={() => {
+                                    setSelectedRows([]);
+                                    setSelectAllChecked(false);
+                                }}
+                            // title="Cancel"
+                            >
+                                <FaTimes className="text-gray-600" />
+                            </div>
+                        </FuseTooltip>
                     </>
                 )}
             </div>

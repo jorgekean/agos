@@ -165,12 +165,12 @@ const TimesheetMoreActions = () => {
         const newTimesheets = await timesheetService.getTimesheetsOfTheDay();
         setTimesheets(newTimesheets);
         toast.success("Task deleted successfully", { position: "top-right" });
-        setShowSelectOptions(true);
+        setShowSelectOptions(false);
     };
 
     const handleCopySelected = () => {
         setCopiedRows(selectedRows);
-        setShowSelectOptions(true);
+        setShowSelectOptions(false);
         setSelectedRows([]);
     };
 
@@ -187,7 +187,7 @@ const TimesheetMoreActions = () => {
 
     return (
         <div className="flex items-center justify-between">
-            <div className={`flex space-x-4 rounded-md px-2 py-1 shadow-sm ${timesheets.length > 0 ? "bg-gray-100" : "bg-white"}`}>
+            <div className={`flex space-x-4 rounded-md px-2 py-1 shadow-sm ${timesheets.length > 0 ? "bg-primary5" : "bg-white"}`}>
                 {timesheets.length > 0 && (<>
                     <FuseTooltip content={showSelectOptions ? "Hide Selection" : "Select Items"}>
                         <div
@@ -215,13 +215,13 @@ const TimesheetMoreActions = () => {
                             className="w-8 h-8 flex items-center justify-center bg-red-100 hover:bg-red-200 rounded-full cursor-pointer transition-all"
                             onClick={selectedRows.length === 0
                                 ? () => {
-                                        toast.error("No data is selected.", {
-                                            position: "top-right",
-                                        });
-                                    }
+                                    toast.error("No data is selected.", {
+                                        position: "top-right",
+                                    });
+                                }
                                 : () => {
-                                        handleDeleteSelected();
-                                    }
+                                    handleDeleteSelected();
+                                }
                             }
                         // title="Delete Selected"
                         >
@@ -234,20 +234,20 @@ const TimesheetMoreActions = () => {
                             className="w-8 h-8 flex items-center justify-center bg-blue-100 hover:bg-blue-200 rounded-full cursor-pointer transition-all"
                             onClick={selectedRows.length === 0
                                 ? () => {
-                                        toast.error("No data is selected.", {
-                                            position: "top-right",
-                                        });
-                                    }
+                                    toast.error("No data is selected.", {
+                                        position: "top-right",
+                                    });
+                                }
                                 : () => {
-                                        handleCopySelected();
-                                    }
+                                    handleCopySelected();
+                                }
                             }
                         // title="Copy Selected"
                         >
                             <FaCopy className="text-blue-600" />
                         </div>
                     </FuseTooltip>
-                </>   
+                </>
                 )}
                 {copiedRows.length > 0 && (
                     <FuseTooltip content="Paste Selected">
@@ -264,12 +264,12 @@ const TimesheetMoreActions = () => {
 
             <div className="flex space-x-6">
                 {startTime && <EditableStartTime startTime={startTime} />}
-                <div className="text-secondary2 dark:text-secondary3 font-bold">
+                {/* <div className="text-secondary2 dark:text-secondary3 font-bold">
                     Misc Time:
                     <span className="ml-2 text-secondary2 dark:text-secondary2">
                         {timesheetService.formatDuration(miscTime)}
                     </span>
-                </div>
+                </div> */}
                 <div className="text-secondary2 dark:text-secondary3 font-bold">
                     Total Hours:
                     <span className="ml-2 text-secondary2 dark:text-secondary2">
